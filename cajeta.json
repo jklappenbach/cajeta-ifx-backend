@@ -1,0 +1,41 @@
+{
+    // cajeta-ifx-backend — a MELT (BOM / version catalog; see BuildTool.md "Melts").
+    //
+    // This is the single REQUIRED dependency an interactive app adds to light up window / input /
+    // audio. It resolves the right per-OS `ifx` backend(s) for the active build target, so the
+    // developer writes ONE line and the build links the matching backend. `ifx` itself is stdlib
+    // (implicit, never declared). A HEADLESS build omits this melt and rides the stdlib `null`
+    // floor (and the optional cajeta-ifx-harness for capture/replay testing).
+
+    "details": {
+        "name":               "dev.cajeta.ifx-backend",
+        "version":            "0.1.0",
+        "description":        "Required melt selecting the per-OS ifx window/input/audio backend(s) for the build target.",
+        "license":            "MIT",
+        "authors":            ["Julian Klappenbach <julian@twilight.digital>"],
+        "cajeta-lang-version": "1.0"
+    },
+
+    "melt": {
+        // The backends this melt coordinates, pinned to one coherent set. The build selects the
+        // member whose target matches the active build target (a Win32 backend cannot compile for
+        // Linux, so selection is target-conditional, not "link them all"). On a given OS the
+        // selected backend's probe()/priority() then resolves within-OS variants at runtime
+        // (e.g. Wayland vs X11) — see cajeta-gfx-spec.md §9.4.
+        "dependencies": {
+            "dev.cajeta.ifx.windows": "0.1.*",
+            "dev.cajeta.ifx.linux":   "0.1.*",
+            "dev.cajeta.ifx.macos":   "0.1.*",
+            "dev.cajeta.ifx.ios":     "0.1.*",
+            "dev.cajeta.ifx.android": "0.1.*"
+        },
+
+        "properties": {
+            "ifx-version": "0.1"
+        },
+
+        "repositories": [
+            { "name": "central", "url": "https://repo.cajeta.org", "priority": 0 }
+        ]
+    }
+}
