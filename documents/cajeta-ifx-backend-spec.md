@@ -33,3 +33,22 @@ churn) and restores SDL-style one-line ergonomics. Umbrella design: the cajeta r
 - Umbrella: `cajeta-gfx-spec.md` §9.3 (packaging) + §9.4 (binding model).
 - Members: `cajeta-ifx-{windows,linux,macos,ios,android}`.
 - Contract: stdlib `cajeta.ifx`.
+
+---
+
+## Appendix A — Per-target SDK floors (from vendor research)
+
+The melt pins each backend at the minimum OS its modern SDK choice requires, so a consumer inherits
+a coherent, shippable floor:
+
+| Target backend | Min OS | Driven by |
+|---|---|---|
+| `ifx.windows` | **Windows 10 1903** | GameInput |
+| `ifx.linux` | Wayland+PipeWire (modern) · X11+ALSA (floor) | dual-stack runtime detection |
+| `ifx.macos` | **macOS 11+** | Metal / GameController; MoltenVK |
+| `ifx.ios` | **iOS 13+** (15+ recommended) | UIScene (mandatory), GameController, MoltenVK |
+| `ifx.android` | **API 24** (Vulkan) / **26** (AAudio) | GameActivity to API 19 |
+
+Binding cost the melt's consumers should know: Windows/Linux/Android = C FFI; **macOS/iOS pull a
+small Obj-C shim** (in those backends); **Android pulls a JNI/Java companion**. None leak into `ifx`.
+Full feature matrix + gap plan: the cajeta repo's `cajeta-gfx-spec.md` §9.7.
