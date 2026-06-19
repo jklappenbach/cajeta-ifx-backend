@@ -46,7 +46,7 @@ a coherent, shippable floor:
 | `ifx.windows` | **Windows 10 1903** | GameInput |
 | `ifx.linux` | Wayland+PipeWire (modern) · X11+ALSA (floor) | dual-stack runtime detection |
 | `ifx.macos` | **macOS 11+** | Metal / GameController; MoltenVK |
-| `ifx.ios` | **iOS 13+** (15+ recommended) | UIScene (mandatory), GameController, MoltenVK |
+| `ifx.ios` | **iOS 13+** (15+ recommended) | UIScene (enforced at iOS 27 SDK), GameController, MoltenVK |
 | `ifx.android` | **API 24** (Vulkan) / **26** (AAudio) | GameActivity to API 19 |
 
 Binding cost the melt's consumers should know: Windows/Linux/Android = C FFI; **macOS/iOS pull a
